@@ -47,15 +47,17 @@ int main(int argc, char **argv) {
         printf("Connected\n");
         char *message = "Hello there.\n";
         send(takenSock, message, strlen(message), 0);
+        freeaddrinfo(serverInfo);
 
     } else if(!strcmp(option, "-c") && argc == 3) { // run as the client
         status = getaddrinfo(remoteAddress, PORT, &info, &serverInfo);
         sock = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
         connect(sock, serverInfo->ai_addr, serverInfo->ai_addrlen);
-        char *buffer;
+        char buffer[101];
         printf("Connected\n");
         recv(sock, buffer, 100, 0);
         printf("%s\n", buffer);
+        freeaddrinfo(serverInfo);
     } else {
         printf("Improper input\n");
     }
