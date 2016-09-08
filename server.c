@@ -55,6 +55,7 @@ int main(int argc, char **argv) {
         send(takenSock, message, strlen(message), 0);
         fd_set set;
         FD_SET (takenSock, &set);
+        FD_SET (0, &set);
         select(FD_SETSIZE, &set, NULL, NULL, &timeout);
         recv(takenSock, buffer, 100, 0);
         printf("%s\n", buffer);
