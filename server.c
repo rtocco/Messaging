@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <sys/time.h>
 #include <arpa/inet.h>
 
 #define PORT "9999"
