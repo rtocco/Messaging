@@ -52,7 +52,10 @@ int main(int argc, char **argv) {
         status = getaddrinfo(remoteAddress, PORT, &info, &serverInfo);
         sock = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
         connect(sock, serverInfo->ai_addr, serverInfo->ai_addrlen);
+        char *buffer;
         printf("Connected\n");
+        recv(sock, buffer, 100, 0);
+        printf("%s\n", buffer);
     } else {
         printf("Improper input\n");
     }
