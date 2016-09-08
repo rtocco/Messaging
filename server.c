@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 
     char *option = argv[1];
     char *remoteAddress;
-    if(charc == 3) {
+    if(argc == 3) {
         remoteAddress = argv[2];
     }
 
