@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
                 send(takenSock, message, strlen(message), 0);
             } else {
                 recv(takenSock, buffer, 100, 0);
-                printf("%s\n", buffer);
+                printf("\n%s\n", buffer);
             }
         }
         freeaddrinfo(serverInfo);
@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
                 send(sock, message, strlen(message), 0);
             } else {
                 recv(takenSock, buffer, 100, 0);
-                printf("%s\n", buffer);
+                printf("\n%s\n", buffer);
             }
         }
         freeaddrinfo(serverInfo);
