@@ -61,6 +61,7 @@ int main(int argc, char **argv) {
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
             if(FD_ISSET(0, &set)) {
+                memset(message, 0, sizeof message);
                 read(STDIN_FILENO, message, 100);
                 send(takenSock, message, strlen(message), 0);
             }
@@ -82,6 +83,7 @@ int main(int argc, char **argv) {
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
             if(FD_ISSET(0, &set)) {
+                memset(message, 0, sizeof message);
                 read(STDIN_FILENO, message, 100);
                 send(sock, message, strlen(message), 0);
             }
