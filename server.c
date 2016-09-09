@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
     struct sockaddr_storage clientAddress;
 
     struct timeval timeout;
-    timeout.tv_sec = 10;
+    timeout.tv_sec = 100;
     timeout.tv_usec = 0;
     fd_set set;
     FD_ZERO (&set);
