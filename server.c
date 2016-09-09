@@ -38,8 +38,6 @@ int main(int argc, char **argv) {
     timeout.tv_sec = 100;
     timeout.tv_usec = 0;
     fd_set set;
-    FD_ZERO (&set);
-    FD_SET (0, &set);
 
     memset(&info, 0, sizeof info);
     info.ai_family = AF_UNSPEC;
@@ -55,10 +53,13 @@ int main(int argc, char **argv) {
         socketSize = sizeof clientAddress;
         takenSock = accept(sock, (struct sockaddr *)&clientAddress, &socketSize);
 
-        FD_SET (takenSock, &set);
         char message[100];
         while(1) {
+            FD_ZERO (&set);
+            FD_SET (0, &set);
+            FD_SET (takenSock, &set);
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
+            printf("Past select\n");
             if(status != 1) { exit(1); }
             if(FD_ISSET(0, &set)) {
                 memset(message, 0, sizeof message);
@@ -68,7 +69,7 @@ int main(int argc, char **argv) {
             if(FD_ISSET(takenSock, &set)) {
                 memset(buffer, 0, sizeof buffer);
                 recv(takenSock, buffer, 100, 0);
-                printf("\n%s\n", buffer);
+                printf("%s", buffer);
             }
         }
         freeaddrinfo(serverInfo);
@@ -78,9 +79,11 @@ int main(int argc, char **argv) {
         sock = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
         connect(sock, serverInfo->ai_addr, serverInfo->ai_addrlen);
 
-        FD_SET (sock, &set);
         char message[100];
         while(1) {
+            FD_ZERO (&set);
+            FD_SET (0, &set);
+            FD_SET (sock, &set);
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
             if(FD_ISSET(0, &set)) {
