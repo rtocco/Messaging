@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
             FD_ZERO (&set);
             FD_SET (0, &set);
             FD_SET (sock, &set);
-            status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
+            status = select(FD_SETSIZE, &set, NULL, NULL, NULL);
             if(status != 1) { exit(1); }
             if(FD_ISSET(0, &set)) {
                 memset(message, 0, sizeof message);
