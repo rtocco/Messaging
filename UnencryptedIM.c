@@ -58,6 +58,7 @@ int main(int argc, char **argv) {
             if(FD_ISSET(0, &set)) {
                 memset(message, 0, sizeof message);
                 read(STDIN_FILENO, message, 100);
+                if(message[0] == '\0') { exit(1); }
                 send(takenSock, message, strlen(message), 0);
             }
             if(FD_ISSET(takenSock, &set)) {
@@ -83,6 +84,7 @@ int main(int argc, char **argv) {
             if(FD_ISSET(0, &set)) {
                 memset(message, 0, sizeof message);
                 read(STDIN_FILENO, message, 100);
+                if(message[0] == '\0') { exit(1); }
                 send(sock, message, strlen(message), 0);
             }
             if(FD_ISSET(sock, &set)) {
