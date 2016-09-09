@@ -49,7 +49,6 @@ int main(int argc, char **argv) {
         sock = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
         bind(sock, serverInfo->ai_addr, serverInfo->ai_addrlen);
         listen(sock, BUFFER);
-        printf("Listening on port %s\n", PORT);
         socketSize = sizeof clientAddress;
         takenSock = accept(sock, (struct sockaddr *)&clientAddress, &socketSize);
 
