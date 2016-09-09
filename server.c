@@ -66,6 +66,7 @@ int main(int argc, char **argv) {
                 send(takenSock, message, strlen(message), 0);
             }
             if(FD_ISSET(takenSock, &set)) {
+                memset(buffer, 0, sizeof buffer);
                 recv(takenSock, buffer, 100, 0);
                 printf("\n%s\n", buffer);
             }
@@ -88,6 +89,7 @@ int main(int argc, char **argv) {
                 send(sock, message, strlen(message), 0);
             }
             if(FD_ISSET(sock, &set)) {
+                memset(buffer, 0, sizeof buffer);
                 recv(sock, buffer, 100, 0);
                 printf("\n%s\n", buffer);
             }
