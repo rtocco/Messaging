@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
             if(FD_ISSET(sock, &set)) {
                 memset(buffer, 0, sizeof buffer);
                 recv(sock, buffer, 100, 0);
-                printf("\n%s\n", buffer);
+                printf("%s", buffer);
             }
         }
         freeaddrinfo(serverInfo);
