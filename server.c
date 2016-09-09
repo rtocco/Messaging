@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
         printf("Listening on port %s\n", PORT);
         socketSize = sizeof clientAddress;
         takenSock = accept(sock, (struct sockaddr *)&clientAddress, &socketSize);
-        printf("iCheck\n");
+
         FD_SET (takenSock, &set);
         char message[100];
         while(1) {
@@ -78,8 +78,10 @@ int main(int argc, char **argv) {
         FD_SET (sock, &set);
         char message[100];
         while(1) {
+            printf("Here\n");
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
+            printf("Here1\n");
             if(FD_ISSET(0, &set)) {
                 read(STDIN_FILENO, message, 100);
                 send(sock, message, strlen(message), 0);
