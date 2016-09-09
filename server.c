@@ -39,7 +39,6 @@ int main(int argc, char **argv) {
     timeout.tv_usec = 0;
     fd_set set;
     FD_ZERO (&set);
-    FD_SET (takenSock, &set);
     FD_SET (0, &set);
 
     memset(&info, 0, sizeof info);
@@ -56,6 +55,7 @@ int main(int argc, char **argv) {
         socketSize = sizeof clientAddress;
         takenSock = accept(sock, (struct sockaddr *)&clientAddress, &socketSize);
 
+        FD_SET (takenSock, &set);
         char message[100];
         while(1) {
             printf("Check1\n");
@@ -64,8 +64,10 @@ int main(int argc, char **argv) {
             scanf("%s", message);
             printf("Check2\n");
             if(strlen(message) > 0) {
+                printf("Check3\n");
                 send(takenSock, message, strlen(message), 0);
             } else {
+                printf("Check4\n");
                 recv(takenSock, buffer, 100, 0);
                 printf("\n%s\n", buffer);
             }
@@ -77,6 +79,7 @@ int main(int argc, char **argv) {
         sock = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
         connect(sock, serverInfo->ai_addr, serverInfo->ai_addrlen);
 
+        FD_SET (sock, &set);
         char message[100];
         while(1) {
             printf("Here1\n");
@@ -87,7 +90,7 @@ int main(int argc, char **argv) {
             if(strlen(message) > 0) {
                 send(sock, message, strlen(message), 0);
             } else {
-                recv(takenSock, buffer, 100, 0);
+                recv(sock, buffer, 100, 0);
                 printf("\n%s\n", buffer);
             }
         }
