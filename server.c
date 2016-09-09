@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define PORT "9999"
+#define PORT "9998"
 #define BUFFER 10
 
 int main(int argc, char **argv) {
@@ -55,13 +55,20 @@ int main(int argc, char **argv) {
         printf("Listening on port %s\n", PORT);
         socketSize = sizeof clientAddress;
         takenSock = accept(sock, (struct sockaddr *)&clientAddress, &socketSize);
-
+        printf("Here\n");
         //send(takenSock, message, strlen(message), 0)
+        char message[100];
         while(1) {
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
-            recv(takenSock, buffer, 100, 0);
-            printf("%s\n", buffer);
+            scanf("%s", message);
+            if(strlen(message) > 0) {
+                send(takenSock, message, strlen(message), 0);
+            }
+            else {
+                recv(takenSock, buffer, 100, 0);
+                printf("%s\n", buffer);
+            }
         }
         freeaddrinfo(serverInfo);
 
