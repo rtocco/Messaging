@@ -14,7 +14,6 @@
 
 int main(int argc, char **argv) {
     if(argc != 2 && argc != 3) {
-        printf("Improper number of arguments\n");
         return 1;
     }
 
@@ -34,9 +33,6 @@ int main(int argc, char **argv) {
     struct addrinfo *n;
     struct sockaddr_storage clientAddress;
 
-    struct timeval timeout;
-    timeout.tv_sec = 100;
-    timeout.tv_usec = 0;
     fd_set set;
 
     memset(&info, 0, sizeof info);
@@ -57,7 +53,7 @@ int main(int argc, char **argv) {
             FD_ZERO (&set);
             FD_SET (0, &set);
             FD_SET (takenSock, &set);
-            status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
+            status = select(FD_SETSIZE, &set, NULL, NULL, NULL);
             if(status != 1) { exit(1); }
             if(FD_ISSET(0, &set)) {
                 memset(message, 0, sizeof message);
@@ -96,8 +92,6 @@ int main(int argc, char **argv) {
             }
         }
         freeaddrinfo(serverInfo);
-    } else {
-        printf("Improper input\n");
     }
 
 
