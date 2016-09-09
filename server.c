@@ -58,9 +58,11 @@ int main(int argc, char **argv) {
 
         char message[100];
         while(1) {
+            printf("Check1\n");
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
             scanf("%s", message);
+            printf("Check2\n");
             if(strlen(message) > 0) {
                 send(takenSock, message, strlen(message), 0);
             } else {
@@ -77,9 +79,11 @@ int main(int argc, char **argv) {
 
         char message[100];
         while(1) {
+            printf("Here1\n");
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
             scanf("%s", message);
+            printf("Here2\n");
             if(strlen(message) > 0) {
                 send(sock, message, strlen(message), 0);
             } else {
