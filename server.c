@@ -59,7 +59,6 @@ int main(int argc, char **argv) {
             FD_SET (0, &set);
             FD_SET (takenSock, &set);
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
-            printf("Past select\n");
             if(status != 1) { exit(1); }
             if(FD_ISSET(0, &set)) {
                 memset(message, 0, sizeof message);
