@@ -55,8 +55,7 @@ int main(int argc, char **argv) {
         printf("Listening on port %s\n", PORT);
         socketSize = sizeof clientAddress;
         takenSock = accept(sock, (struct sockaddr *)&clientAddress, &socketSize);
-        printf("Here\n");
-        //send(takenSock, message, strlen(message), 0)
+
         char message[100];
         while(1) {
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
@@ -64,8 +63,7 @@ int main(int argc, char **argv) {
             scanf("%s", message);
             if(strlen(message) > 0) {
                 send(takenSock, message, strlen(message), 0);
-            }
-            else {
+            } else {
                 recv(takenSock, buffer, 100, 0);
                 printf("%s\n", buffer);
             }
@@ -77,11 +75,17 @@ int main(int argc, char **argv) {
         sock = socket(serverInfo->ai_family, serverInfo->ai_socktype, serverInfo->ai_protocol);
         connect(sock, serverInfo->ai_addr, serverInfo->ai_addrlen);
 
+        char message[100];
         while(1) {
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
-            recv(takenSock, buffer, 100, 0);
-            printf("%s\n", buffer);
+            scanf("%s", message);
+            if(strlen(message) > 0) {
+                send(sock, message, strlen(message), 0);
+            } else {
+                recv(takenSock, buffer, 100, 0);
+                printf("%s\n", buffer);
+            }
         }
         freeaddrinfo(serverInfo);
     } else {
