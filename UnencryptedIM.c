@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
             FD_SET (0, &set); // stdin
             FD_SET (takenSock, &set); // socket
             status = select(FD_SETSIZE, &set, NULL, NULL, NULL); // Wait for input.
-            if(status != 1) { exit(1); }
+            if(status != 1) { break; }
             if(FD_ISSET(0, &set)) { // stdin
                 memset(message, 0, sizeof message);
                 read(STDIN_FILENO, message, 100);
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
             FD_SET (0, &set); // stdin
             FD_SET (sock, &set); // socket
             status = select(FD_SETSIZE, &set, NULL, NULL, NULL);
-            if(status != 1) { exit(1); }
+            if(status != 1) { break; }
             if(FD_ISSET(0, &set)) { // stdin
                 memset(message, 0, sizeof message);
                 read(STDIN_FILENO, message, 100);
