@@ -58,12 +58,15 @@ int main(int argc, char **argv) {
         FD_SET (takenSock, &set);
         char message[100];
         while(1) {
+            printf("check\n");
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
+            printf("check1\n");
             if(FD_ISSET(0, &set)) {
                 read(STDIN_FILENO, message, 100);
                 send(takenSock, message, strlen(message), 0);
             } else {
+                printf("check2\n");
                 recv(takenSock, buffer, 100, 0);
                 printf("\n%s\n", buffer);
             }
@@ -78,10 +81,8 @@ int main(int argc, char **argv) {
         FD_SET (sock, &set);
         char message[100];
         while(1) {
-            printf("Here\n");
             status = select(FD_SETSIZE, &set, NULL, NULL, &timeout);
             if(status != 1) { exit(1); }
-            printf("Here1\n");
             if(FD_ISSET(0, &set)) {
                 read(STDIN_FILENO, message, 100);
                 send(sock, message, strlen(message), 0);
